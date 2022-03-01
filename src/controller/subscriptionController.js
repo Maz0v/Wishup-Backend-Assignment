@@ -1,5 +1,7 @@
 const subcriptionModel = require("../model/subscriptionModel");
 const userModel = require("../model/userModel");
+
+//Function to convert date into yyyy-mm-dd format
 function convert(str) {
    var date = new Date(str),
       mnth = ("0" + (date.getMonth() + 1)).slice(-2),
@@ -21,17 +23,16 @@ const takeSubscription = async function (req, res) {
 
          res.status(400).send({ msg: "User is not registered" })
       }
-
+         //regex to check date in yyyy-mm-dd format
       const dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
       if (dateRegex.test(start_date)) {
          subsData["start_date"] = start_date
 
+      }else {
+         res.status(400).send({ msg: "Give date in YYYY-MM-DD format" })
       }
 
-      
-
-
-      if (plan_id == "FREE") {
+         if (plan_id == "FREE") {
          subsData["plan_id"] = "FREE"
          subsData["amount"] = 0
          subsData["validity"] = null
@@ -65,7 +66,7 @@ const takeSubscription = async function (req, res) {
          let endDate = convert(new Date(Date.parse(start_date) + (180 * 86400000)).toUTCString())
          subsData["valid_till"] = endDate
 
-      } else if (plan_id === "PRO_6M") {
+      } else if (plan_id == "PRO_6M") {
          subsData["plan_id"] = "PRO_6M"
          subsData["amount"] = 900.0
          subsData["validity"] = 180
@@ -100,7 +101,7 @@ const getSubscriptionDetailsByDate = async function (req, res) {
          let Difference_In_Time = enddate.getTime() -  inputdate.getTime();
          let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
          let daysLeft =  Difference_In_Days
-         sendOutput["days_left"]=daysLeft
+         sendOutput["days_left"] = daysLeft
 
          res.status(200).send(sendOutput)
       }
