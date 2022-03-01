@@ -7,6 +7,7 @@
 # Instructions
 ## General Instructions
 The submission will be evaluated for:
-Correctness
-Code Readability: Please write well formatted,
+### Correctness
+### Code Readability: 
+Please write well formatted,
 readable code with appropriate variable naming
